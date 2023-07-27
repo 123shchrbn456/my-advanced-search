@@ -36,39 +36,11 @@ function App() {
     };
 
     // Event Handler
-    const onNameInputChange = (e) => {
-        setFilteringInputs((prev) => ({ ...prev, nameQuery: e.target.value }));
-    };
+    const onInputChange = (e) => {
+        const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
 
-    // Event Handler
-    const onOlderThan30InputChange = (e) => {
-        setFilteringInputs((prev) => ({ ...prev, olderThan30: e.target.checked }));
-    };
-
-    // Event Handler
-    const onCountryChange = (e) => {
-        setFilteringInputs((prev) => ({ ...prev, country: e.target.value }));
-    };
-
-    // Event Handler
-    const onSalaryInputChange = (e) => {
-        setMinSalary(e.target.value);
-        setFilteringInputs((prev) => ({ ...prev, minSalary: e.target.value }));
-    };
-
-    // Event Handler
-    const onOneChildInputChange = (e) => {
-        setFilteringInputs((prev) => ({ ...prev, oneChild: e.target.checked }));
-    };
-
-    // Event Handler
-    const onTwoChildrenInputChange = (e) => {
-        setFilteringInputs((prev) => ({ ...prev, twoChildren: e.target.checked }));
-    };
-
-    // Event Handler
-    const onThreeChildrenInputChange = (e) => {
-        setFilteringInputs((prev) => ({ ...prev, threeChildren: e.target.checked }));
+        console.log(value);
+        setFilteringInputs((filteringInputs) => ({ ...filteringInputs, [e.target.name]: value }));
     };
 
     return (
@@ -77,28 +49,24 @@ function App() {
                 <p className="filter-bar--item">
                     <label>
                         <b>Name Search:</b>
-                        <input type="text" name="nameFilter" id="" value={filteringInputs.nameQuery} onChange={onNameInputChange} />
+                        <input type="text" name="nameQuery" id="" value={filteringInputs.nameQuery} onChange={onInputChange} />
                     </label>
                 </p>
                 <p className="filter-bar--item">
                     <label>
                         <b>Select Only Older Than 30 Years:</b>
-                        <input
-                            type="checkbox"
-                            name="genderFilter"
-                            id=""
-                            value={filteringInputs.olderThan30}
-                            onChange={onOlderThan30InputChange}
-                        />
+                        <input type="checkbox" name="olderThan30" id="" checked={filteringInputs.olderThan30} onChange={onInputChange} />
                     </label>
                 </p>
                 <p className="filter-bar--item">
                     <label htmlFor="">
                         Choose Countries
-                        <select name="countries" id="" value={filteringInputs.country} onChange={onCountryChange}>
+                        <select name="country" id="" value={filteringInputs.country} onChange={onInputChange}>
                             <option value="">Select</option>
-                            {countryNames.map((countryName) => (
-                                <option value={countryName.toLowerCase()}>{countryName}</option>
+                            {countryNames.map((countryName, index) => (
+                                <option key={index} value={countryName.toLowerCase()}>
+                                    {countryName}
+                                </option>
                             ))}
                         </select>
                     </label>
@@ -111,11 +79,11 @@ function App() {
                         min="500"
                         max="10000"
                         step="500"
-                        name=""
+                        name="minSalary"
                         id=""
                         list="markers"
                         value={filteringInputs.minSalary}
-                        onChange={onSalaryInputChange}
+                        onChange={onInputChange}
                     />
                     <datalist id="markers">
                         <option value="500" label="500"></option>
@@ -131,25 +99,13 @@ function App() {
                 <p className="filter-bar--item">
                     <label>
                         <b>Select with 1 child:</b>
-                        <input
-                            type="checkbox"
-                            name="genderFilter"
-                            id=""
-                            value={filteringInputs.oneChild}
-                            onChange={onOneChildInputChange}
-                        />
+                        <input type="checkbox" name="oneChild" id="" checked={filteringInputs.oneChild} onChange={onInputChange} />
                     </label>
                 </p>
                 <p className="filter-bar--item">
                     <label>
                         <b>Select with 2 children:</b>
-                        <input
-                            type="checkbox"
-                            name="genderFilter"
-                            id=""
-                            value={filteringInputs.twoChildren}
-                            onChange={onTwoChildrenInputChange}
-                        />
+                        <input type="checkbox" name="twoChildren" id="" checked={filteringInputs.twoChildren} onChange={onInputChange} />
                     </label>
                 </p>
                 <p className="filter-bar--item">
@@ -157,10 +113,10 @@ function App() {
                         <b>Select with 3 children:</b>
                         <input
                             type="checkbox"
-                            name="genderFilter"
+                            name="threeChildren"
                             id=""
-                            value={filteringInputs.threeChildren}
-                            onChange={onThreeChildrenInputChange}
+                            checked={filteringInputs.threeChildren}
+                            onChange={onInputChange}
                         />
                     </label>
                 </p>
